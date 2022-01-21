@@ -113,6 +113,8 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 
 
 - 모델 코드
+
+
 model = keras.models.Sequential([
     keras.layers.LSTM(20, return_sequences=True, input_shape=[None, 1]),
     keras.layers.LSTM(20, return_sequences=True),
