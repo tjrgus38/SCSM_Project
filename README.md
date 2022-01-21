@@ -93,7 +93,7 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 	- Batter in T
 	- Battery out T
 
-
+************************************************
 > Phase01 : 다양한 환경에서 시스템 운영의 허용 온도 구간 계산
 >  -	외부환경에 따른 적정 온도계산
 
