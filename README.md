@@ -1,5 +1,8 @@
 # SCSm_Project
 
+
+### 팀명 : 레드스톤
+### 그룹 멤버 : 강석현/ 배흥명/ 이재빈
 ### 주제 : 귀납적 방식으로 인공지능 computing을 통한 최적의 PID 계수 계산
 
 > 레퍼런스
@@ -7,6 +10,7 @@
 > - COP concept
 > - LSTM algorithm
 > - Reinforcement algorithm
+> - LSTM-based Power Load Prediction System Design for Store Energy Saving
 
 ## 개발 목표
 **다양한 환경과 온도조절을 위한 많은 기계적 장치들을 비용대비 효과적으로 시스템 열을 관리하는 것이 목표이다.** 엔지니어들이 기계적 장치를 조절하는데 시간적, 인적, 금전적 비용을 절감하고 여러 환경에서 최고의 퍼포먼스를 보조할 수 있는 인공지능 모델을 만들것이다.
@@ -75,15 +79,31 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 
 출처 : 최적운전계획법에 의한 전기차의 고전압 배터리셀 온도 관리
 
+> Phase00 : 데이터 전처리(data preprocessing)
+> - 데이터 결측치 확인(결측치에 대한 interpolation 적용: MICE)
+> - 데이터 분포도 확인
+> - 모델 학습에 최적화된 정규화 작업(필요시 : log scaling)
+
+- 입력 변수 리스트
+	- 센서로 읽은 내부 상태 데이터 값(sls)
+	- 압력, 습도, 온도
+- 출력 변수 리스트
+	- CPU coolant in T
+	- CPU coolant out T
+	- Batter in T
+	- Battery out T
+
+
 > Phase01 : 다양한 환경에서 시스템 운영의 허용 온도 구간 계산
 >  •	외부환경에 따른 적정 온도계산
 
-> Phase02 : LSTM 모델을 통한 시스템 내 상태 변수를 통한 CPU, Battery Prediction model만들기
+> Phase02 : LSTM 모델을 통한 내부환경변수 (센서로 읽은 온도, 습도, 압력)의 시계열 데이터를 이용해 CPU, Battery온도 예측모델 생성
 >  •	적정 온도까지 떨어뜨리기 위한 효율성에 대한 평가기준의 필요성(COP평가)
 >  •	어떻게 COP를 계산할 수 있는가
 >  •	어떻게 예측 모델을 만들 것인가
 >  •	데이터 분류    
->  •	데이터(data detail)  
+>  •	데이터(data detail)
+>  •	Transformer모델까지 고려  
 
 >Keras LSTM 유형
 
@@ -115,11 +135,11 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 - 모델 코드
 
 
-model = keras.models.Sequential([
-    keras.layers.LSTM(20, return_sequences=True, input_shape=[None, 1]),
-    keras.layers.LSTM(20, return_sequences=True),
-    keras.layers.TimeDistributed(keras.layers.Dense(10))
-])
+	model = keras.models.Sequential([
+   	 keras.layers.LSTM(20, return_sequences=True, input_shape=[None, 1]),
+  	  keras.layers.LSTM(20, return_sequences=True),
+  	  keras.layers.TimeDistributed(keras.layers.Dense(10))
+	])
 
 
 출처 : https://box-world.tistory.com/73
@@ -198,9 +218,12 @@ def univariate_data(dataset, start_index, end_index, history_size, target_size):
 
 >  Phase03 : 외부환경을 고려한 최적의 타겟 내부 상태 변수 조합 필터링  
 >  •	최적의 상태 변수 조합 실험
+- 개발 상세
+	- 1)	외부 환경 기준으로 적정온도를 형성할 수 있는 각 내부 변수들의  조합 생성
+	- 2)	내부 변수들 조합에 대한 필요한 전기에너지 소모량 계산
+	- 3)	입력값은 내부 변수들의 조합값, 출력값은 전기에너지 소모량으로 train, valid, test data split
+	- 4)	LSTM model을 통한 전기에너지 소모량이 가장 적은 조합 출력
+
 
 >  Phase04 : Reinforcement Learning으로 PID value 계산하기  
 >  •	PID value caculation by LSTM algorithm
-
-
-## 개발과정일정표
