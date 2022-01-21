@@ -79,6 +79,7 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 
 출처 : 최적운전계획법에 의한 전기차의 고전압 배터리셀 온도 관리
 
+*************************************************
 > Phase00 : 데이터 전처리(data preprocessing)
 > - 데이터 결측치 확인(결측치에 대한 interpolation 적용: MICE)
 > - 데이터 분포도 확인
