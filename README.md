@@ -95,25 +95,23 @@ MICE 는 Multivariate Imputation By Chained Equations 알고리즘의 약자로 
 
 
 > Phase01 : 다양한 환경에서 시스템 운영의 허용 온도 구간 계산
->  •	외부환경에 따른 적정 온도계산
+>  -	외부환경에 따른 적정 온도계산
 
+
+***********************************************
 > Phase02 : LSTM 모델을 통한 내부환경변수 (센서로 읽은 온도, 습도, 압력)의 시계열 데이터를 이용해 CPU, Battery온도 예측모델 생성
->  •	적정 온도까지 떨어뜨리기 위한 효율성에 대한 평가기준의 필요성(COP평가)
->  •	어떻게 COP를 계산할 수 있는가
->  •	어떻게 예측 모델을 만들 것인가
->  •	데이터 분류    
->  •	데이터(data detail)
->  •	Transformer모델까지 고려  
-
->Keras LSTM 유형
+>  -	적정 온도까지 떨어뜨리기 위한 효율성에 대한 평가기준의 필요성(COP평가)
+>  -	어떻게 COP를 계산할 수 있는가
+>  -	어떻게 예측 모델을 만들 것인가
+>  -	데이터 분류    
+>  -	데이터(data detail)
+>  -	Transformer모델까지 고려  
 
 
+### Keras LSTM 유형
 > - 1. 단층-단방향 & many-to-one 유형
-
 > - 2. 단층-단방향 & many-to-many 유형
-
 > - 3. 단층-양방향 & many-to-one/many-to-many 유형
-
 > - 4. 2층-단방향/양방향 & many-to-one 유형
 
 
@@ -214,16 +212,18 @@ def univariate_data(dataset, start_index, end_index, history_size, target_size):
 출처 : https://ahnjg.tistory.com/33
 
 
-
+****************************************
 
 >  Phase03 : 외부환경을 고려한 최적의 타겟 내부 상태 변수 조합 필터링  
->  •	최적의 상태 변수 조합 실험
+>  - 최적의 상태 변수 조합 실험
+
+
 - 개발 상세
 	- 1)	외부 환경 기준으로 적정온도를 형성할 수 있는 각 내부 변수들의  조합 생성
 	- 2)	내부 변수들 조합에 대한 필요한 전기에너지 소모량 계산
 	- 3)	입력값은 내부 변수들의 조합값, 출력값은 전기에너지 소모량으로 train, valid, test data split
 	- 4)	LSTM model을 통한 전기에너지 소모량이 가장 적은 조합 출력
 
-
+***************************************
 >  Phase04 : Reinforcement Learning으로 PID value 계산하기  
->  •	PID value caculation by LSTM algorithm
+> -PID value caculation by LSTM algorithm
